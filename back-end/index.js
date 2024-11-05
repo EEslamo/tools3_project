@@ -1,3 +1,4 @@
+//index.js
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -33,6 +34,11 @@ app.put('/users/:id', db.updateUser);
 app.delete('/users/:id', db.deleteUser);
 app.post('/login', db.loginUser);
 
+app.post('/create-order', db.createOrder);
+app.get('/orders', db.getOrders);
+app.get('/user-orders/:userId', db.getUserOrders);
+app.delete('/orders/:id', db.deleteOrder);
+
 // Backend example: /verifyUser endpoint
 // app.get('/verifyUser', (req, res) => {
 //   const userId = req.query.id; // Get user ID from the request
@@ -48,12 +54,26 @@ app.post('/login', db.loginUser);
 //   });
 // });
 
+// Assuming you have a user model set up
 
+// app.post('/validate-user', async (req, res) => {
+//   const { userId } = req.body; // Get userId from request body
 
-// Start the server
-// app.listen(port, () => {
-//   console.log(`App running on port ${port}.`);
+//   try {
+//     const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
+//     if (result.rows.length > 0) {
+//       return res.status(200).json({ valid: true });
+//     } else {
+//       return res.status(404).json({ valid: false });
+//     }
+//   } catch (error) {
+//     console.error('Error validating user:', error); // Log the error
+//     return res.status(500).json({ message: 'Server error' });
+//   }
 // });
+
+app.post('/validate-user' , db.validate_user);
+
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');

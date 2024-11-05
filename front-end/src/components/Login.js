@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../Auth.css';
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [errorMessage, setErrorMessage] = useState(''); // State to store error message
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -19,11 +19,17 @@ function Login() {
       });
 
       if (response.ok) {
-        // Successful login, redirect to welcome page
-        navigate('/welcome');
+        const userData = await response.json();
+        console.log(userData); // Log the entire user data to check its structure
+
+        // Store user data in local storage
+        localStorage.setItem('userId', userData.user.id);
+        localStorage.setItem('username', userData.user.name);
+
+        navigate('/create-order');
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.message || 'Email or password does not match'); // Set the error message
+        setErrorMessage(errorData.message || 'Email or password does not match');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -35,7 +41,7 @@ function Login() {
     <div className="auth-wrapper">
       <div className="auth-inner">
         <h2 className="text-center mb-4">Login to Your Account</h2>
-        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>} {/* Conditionally render the error message */}
+        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
             <label>Email Address</label>
@@ -60,7 +66,7 @@ function Login() {
           <button type="submit" className="btn btn-primary btn-block">Login</button>
         </form>
         <p className="text-center mt-3">
-          <a href="/register">Don't have an account? Register</a>
+          <Link to="/register">Don't have an account? Register</Link>
         </p>
       </div>
     </div>

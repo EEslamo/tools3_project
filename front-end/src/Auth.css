@@ -11,20 +11,21 @@ body {
 
 .auth-wrapper {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   margin: auto;
 }
 
 .auth-inner {
   background: white;
-  padding: 30px;
+  padding: 40px;
   border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Slightly darker shadow for depth */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease-in-out;
 }
 
 .auth-inner:hover {
   transform: scale(1.02);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
